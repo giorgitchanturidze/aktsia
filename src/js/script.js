@@ -1,18 +1,32 @@
-const userMenuButton = document.getElementById("user-menu-button");
-const userMenuDropdown = document.getElementById("user-menu-dropdown");
+const dropdownButton = document.getElementById("user-menu-button");
+const dropdownMenu = document.getElementById("user-menu-dropdown");
 
-userMenuButton.addEventListener("click", function() {
-  userMenuDropdown.classList.toggle("hidden");
-
-  if (userMenuDropdown.classList.contains("hidden")) {
-    userMenuDropdown.classList.add("ease-in", "duration-75", "opacity-0", "scale-95");
-    userMenuDropdown.classList.remove("ease-out", "duration-100", "opacity-100", "scale-100");
+dropdownButton.addEventListener("click", function() {
+  if (dropdownMenu.classList.contains("hidden")) {
+    dropdownMenu.classList.remove("hidden");
+    dropdownMenu.classList.add("transition", "ease-out", "duration-100", "transform", "opacity-0", "scale-95");
+    setTimeout(() => {
+      dropdownMenu.classList.remove("transform", "opacity-0", "scale-95");
+      dropdownMenu.classList.add("transform", "opacity-100", "scale-100");
+    }, 100);
   } else {
-    userMenuDropdown.classList.add("ease-out", "duration-100", "opacity-100", "scale-100");
-    userMenuDropdown.classList.remove("ease-in", "duration-75", "opacity-0", "scale-95");
+    dropdownMenu.classList.remove("transform", "opacity-100", "scale-100");
+    dropdownMenu.classList.add("transition", "ease-in", "duration-75", "transform", "opacity-0", "scale-95");
+    setTimeout(() => {
+      dropdownMenu.classList.add("hidden");
+    }, 75);
   }
 });
 
-
-
-
+document.addEventListener("click", function(event) {
+  if (!dropdownMenu.contains(event.target) && !dropdownButton.contains(event.target)) {
+    if (!dropdownMenu.classList.contains("hidden")) {
+      dropdownMenu.classList.add("transition", "ease-in", "duration-75");
+      dropdownMenu.classList.add("transform", "opacity-0", "scale-95");
+      setTimeout(() => {
+        dropdownMenu.classList.add("hidden");
+        dropdownMenu.classList.remove("transform", "opacity-0", "scale-95");
+      }, 75);
+    }
+  }
+});
